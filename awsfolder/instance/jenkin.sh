@@ -110,3 +110,9 @@ sudo systemctl restart jenkins
 # Configure → Build Triggers → Poll SCM → Schedule: * * * * *
 # GitHub → Settings → Webhooks → Add Webhook
 # http://YOUR_JENKINS_URL/github-webhook/
+
+#####################################################################
+# #####ssh linked into the instance.
+# ssh -o StrictHostKeyChecking=accept-new -i id_rsa ubuntu@ec2-3-142-98-90.us-east-2.compute.amazonaws.com
+# OR # cd /workspaces/workspace2/awsfolder ssh -i "jenkins-access-key.pem" ubuntu@ec2-3-142-98-90.us-east-2.compute.amazonaws.com
+# exit

@@ -10,3 +10,4 @@ crash.log
 .terraform.tfstate
 .terraform.tfstate.backup
 .access_code.sh
+.keypair.pem

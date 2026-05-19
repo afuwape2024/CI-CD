@@ -8,6 +8,11 @@ variable "ami" {
 variable "instance_type" {
   default = "t3.micro"
 }
+variable "key_pair_name" {
+  description = "Existing EC2 key pair name to attach to instances"
+  type        = string
+  default     = null
+}
 variable "tier2_public_sg" {}
 
 variable "public_subnet" {

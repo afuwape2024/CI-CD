@@ -18,6 +18,7 @@ resource "aws_instance" "jenkin_server" {
   subnet_id = var.public_subnet
   vpc_security_group_ids = [var.tier2_public_sg]
   user_data = file("${path.module}/jenkin.sh")
+  key_name = var.key_pair_name
 
   tags = {
     Name = "jenkins_server"
