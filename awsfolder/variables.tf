@@ -18,6 +18,7 @@ variable "aws_private_subnet_cidr" {
 #==============================SECOND AVAILABILITY ZONE=========================
 variable "aws_availability_zone_1" {
   description = "First availability zone"
+  default     = "us-east-2a"
 }
 
 variable "aws_public_subnet_cidr_2" {
@@ -30,6 +31,7 @@ variable "aws_private_subnet_cidr_2" {
 
 variable "aws_availability_zone_2" {
   description = "Second availability zone"
+  default     = "us-east-2b"
 }
 
 
