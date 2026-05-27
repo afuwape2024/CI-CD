@@ -3,7 +3,7 @@ variable "vpc_cidr_block" {
   description = "The CIDR block of the VPC"
 }
 variable "ami" {
-  default = "ami-06e3c045d79fd65d9"
+  default = "ami-0fe18bc3cfa53a248"
 }
 variable "instance_type" {
   default = "t3.micro"
@@ -14,6 +14,7 @@ variable "key_pair_name" {
   default     = null
 }
 variable "tier2_public_sg" {}
+variable "prometheus_sg" {}
 
 variable "public_subnet" {
   description = "Public subnet ID for EC2 instances"

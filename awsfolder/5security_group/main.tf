@@ -93,3 +93,50 @@ resource "aws_security_group_rule" "ssh_access_private" {
 #   ip_protocol       = "tcp"
 #   to_port           = 443
 # }
+
+#$=========================================================================
+#$=========================================================================
+
+resource "aws_security_group" "prometheus_sg" {
+  name        = "prometheus-security-group"
+  description = "Security group for Prometheus server"
+  vpc_id      = var.tier2_vpc
+
+  # Prometheus UI
+  ingress {
+    description = "Prometheus Web UI"
+    from_port   = 9090
+    to_port     = 9090
+    protocol    = "tcp"
+
+    # Restrict to your office/VPN IP in production
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # SSH Access (Optional)
+  ingress {
+    description = "SSH Access"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+
+    # Replace with your IP
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow outbound traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "prometheus-sg"
+  }
+}
+
+#$=========================================================================
+#$=========================================================================

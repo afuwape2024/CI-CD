@@ -50,6 +50,7 @@ module "instance" {
   tier2_vpc = module.network.tier2_vpc
   vpc_cidr_block = var.cidr_block
   tier2_public_sg = module.security_group.tier2_public_sg
+  prometheus_sg = module.security_group.prometheus_sg
   public_subnet = module.network.public_subnet1
   key_pair_name = var.key_pair_name
   mandatory_tags = local.mandatory_tags
