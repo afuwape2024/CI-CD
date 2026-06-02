@@ -140,3 +140,40 @@ resource "aws_security_group" "prometheus_sg" {
 
 #$=========================================================================
 #$=========================================================================
+resource "aws_security_group" "grafana_sg" {
+  name        = "grafana-sg"
+  description = "Security Group for Grafana"
+  vpc_id      = var.tier2_vpc
+
+  ingress {
+    description = "Grafana Web UI"
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+
+    # Replace with your public IP for security
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "SSH Access"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+
+    # Restrict to your trusted CIDR in production
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "grafana-sg"
+  }
+}

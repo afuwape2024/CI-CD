@@ -7,3 +7,6 @@ output "tier2_private_sg" {
 output "prometheus_sg" {
   value = aws_security_group.prometheus_sg.id
 }
+output "grafana_sg" {
+  value =aws_security_group.grafana_sg.id
+}
