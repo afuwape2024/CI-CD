@@ -177,3 +177,91 @@ resource "aws_security_group" "grafana_sg" {
     Name = "grafana-sg"
   }
 }
+
+#$=========================================================================
+#$=========================================================================
+
+resource "aws_security_group" "sonaque_sg" {
+  name        = "sonaque-security-group"
+  description = "Security group for Prometheus server"
+  vpc_id      = var.tier2_vpc
+
+  # Prometheus UI
+  ingress {
+    description = "sonaque Web UI"
+    from_port   = 9000
+    to_port     = 9000
+    protocol    = "tcp"
+
+    # Restrict to your office/VPN IP in production
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # SSH Access (Optional)
+  ingress {
+    description = "SSH Access"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+
+    # Replace with your IP
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow outbound traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "Sonaque_sg"
+  }
+}
+
+#$=========================================================================
+#$=========================================================================
+
+resource "aws_security_group" "nexus_sg" {
+  name        = "nexus-security-group"
+  description = "Security group for Prometheus server"
+  vpc_id      = var.tier2_vpc
+
+  # Prometheus UI
+  ingress {
+    description = "nexus Web UI"
+    from_port   = 8081
+    to_port     = 8081
+    protocol    = "tcp"
+
+    # Restrict to your office/VPN IP in production
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # SSH Access (Optional)
+  ingress {
+    description = "SSH Access"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+
+    # Replace with your IP
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow outbound traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "nexus_sg"
+  }
+}
