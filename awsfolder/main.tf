@@ -52,6 +52,8 @@ module "instance" {
   tier2_public_sg = module.security_group.tier2_public_sg
   prometheus_sg = module.security_group.prometheus_sg
   grafana_sg = module.security_group.grafana_sg
+  nexus_sg = module.security_group.nexus_sg
+  sonarque_sg = module.security_group.sonarque_sg
   public_subnet = module.network.public_subnet1
   key_pair_name = var.key_pair_name
   mandatory_tags = local.mandatory_tags

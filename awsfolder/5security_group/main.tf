@@ -181,14 +181,14 @@ resource "aws_security_group" "grafana_sg" {
 #$=========================================================================
 #$=========================================================================
 
-resource "aws_security_group" "sonaque_sg" {
-  name        = "sonaque-security-group"
-  description = "Security group for Prometheus server"
+resource "aws_security_group" "sonarque_sg" {
+  name        = "sonarque-security-group"
+  description = "Security group for sonarque server"
   vpc_id      = var.tier2_vpc
 
-  # Prometheus UI
+  # sonarque UI
   ingress {
-    description = "sonaque Web UI"
+    description = "sonarque Web UI"
     from_port   = 9000
     to_port     = 9000
     protocol    = "tcp"
@@ -218,7 +218,7 @@ resource "aws_security_group" "sonaque_sg" {
   }
 
   tags = {
-    Name = "Sonaque_sg"
+    Name = "Sonarque_sg"
   }
 }
 

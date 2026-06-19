@@ -10,8 +10,8 @@ output "prometheus_sg" {
 output "grafana_sg" {
   value =aws_security_group.grafana_sg.id
 }
-output "sonaque_sg" {
-  value = aws_security_group.sonaque_sg.id
+output "sonarque_sg" {
+  value = aws_security_group.sonarque_sg.id
 }
 output "nexus_sg" {
   value =aws_security_group.nexus_sg.id

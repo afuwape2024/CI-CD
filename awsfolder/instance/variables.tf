@@ -16,6 +16,8 @@ variable "key_pair_name" {
 variable "tier2_public_sg" {}
 variable "prometheus_sg" {}
 variable "grafana_sg" {}
+variable "sonarque_sg" {}
+variable "nexus_sg" {}
 
 variable "public_subnet" {
   description = "Public subnet ID for EC2 instances"

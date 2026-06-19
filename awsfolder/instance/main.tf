@@ -59,6 +59,9 @@ resource "aws_instance" "grafana" {
   }
 
 }
+#======================================================
+#======================================================
+###### resource for CICD pipeline
 
 resource "aws_instance" "jenkin_server" {
   count = 1
@@ -71,5 +74,35 @@ resource "aws_instance" "jenkin_server" {
 
   tags = {
     Name = "jenkins_server"
+  }
+}
+
+#create sonarque instance 
+resource "aws_instance" "sonarque_server" {
+  count = 1
+  ami     = var.ami
+  instance_type = var.instance_type
+  subnet_id = var.public_subnet
+  vpc_security_group_ids = [var.Sonarque_sg]
+  user_data = file("${path.module}/sonarque.sh")
+  key_name = var.key_pair_name
+
+  tags = {
+    Name = "sonarque_server"
+  }
+}
+
+#create nexus instance 
+resource "aws_instance" "nexus_server" {
+  count = 1
+  ami     = var.ami
+  instance_type = var.instance_type
+  subnet_id = var.public_subnet
+  vpc_security_group_ids = [var.nexus_sg]
+  user_data = file("${path.module}/nexus.sh")
+  key_name = var.key_pair_name
+
+  tags = {
+    Name = "nexus_server"
   }
 }
