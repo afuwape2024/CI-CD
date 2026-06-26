@@ -83,8 +83,8 @@ resource "aws_instance" "sonarque_server" {
   ami     = var.ami
   instance_type = var.instance_type
   subnet_id = var.public_subnet
-  vpc_security_group_ids = [var.Sonarque_sg]
-  user_data = file("${path.module}/sonarque.sh")
+  vpc_security_group_ids = [var.sonarque_sg]
+  user_data = file("${path.module}/sonarqube.sh")
   key_name = var.key_pair_name
 
   tags = {
