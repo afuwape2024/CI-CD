@@ -13,10 +13,10 @@ variable "key_pair_name" {
   type        = string
   default     = null
 }
-variable "sonarqube_instance_type" {
+variable "sonarqube_nexus_instance_type" {
   default = "t2.medium"
 }
-variable "sonarqube_ami" {
+variable "sonarqube_nexus_ami" {
   default = "ami-0e5497a77ef21b5ac"
 }
 
