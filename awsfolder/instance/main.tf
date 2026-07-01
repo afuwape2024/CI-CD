@@ -93,6 +93,20 @@ resource "aws_instance" "sonarque_server" {
   }
 }
 
+resource "aws_instance" "delete_sonarque_server" {
+  count = 1
+  ami     = var.sonarqube_ami
+  instance_type = var.sonarqube_instance_type
+  subnet_id = var.public_subnet
+  vpc_security_group_ids = [var.sonarque_sg]
+  user_data = file("${path.module}/sonarqube2.sh")
+  key_name = var.key_pair_name
+
+  tags = {
+    Name = "delete_sonarque_server"
+  }
+}
+
 #create nexus instance 
 resource "aws_instance" "nexus_server" {
   count = 0
