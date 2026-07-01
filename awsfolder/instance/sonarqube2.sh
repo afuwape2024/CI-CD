@@ -1,32 +1,60 @@
 #!/bin/bash
 set -eux
 
-# Update the system
 apt-get update -y
+apt-get install -y openjdk-17-jdk wget unzip postgresql postgresql-contrib
 
-# Install required packages
-apt-get install -y openjdk-17-jdk wget unzip
+# Kernel settings for Elasticsearch
+cat >> /etc/sysctl.conf <<EOF
+vm.max_map_count=524288
+fs.file-max=131072
+EOF
+sysctl -p
 
-# Download and install SonarQube
+# System limits
+cat >> /etc/security/limits.conf <<EOF
+sonar   -   nofile   131072
+sonar   -   nproc    8192
+EOF
+
+# Start PostgreSQL
+systemctl enable postgresql
+systemctl start postgresql
+
+# Create PostgreSQL user and database
+sudo -u postgres psql <<EOF
+CREATE USER sonar WITH PASSWORD 'SonarPassword123!';
+CREATE DATABASE sonarqube OWNER sonar;
+GRANT ALL PRIVILEGES ON DATABASE sonarqube TO sonar;
+EOF
+
+# Install SonarQube
 cd /opt
-
 wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-25.6.0.109173.zip
-
 unzip sonarqube-25.6.0.109173.zip
-
 mv sonarqube-25.6.0.109173 sonarqube
 
-# Create SonarQube user (if it doesn't already exist)
+# Create sonar user
 id -u sonar >/dev/null 2>&1 || useradd -r -s /bin/bash sonar
 
-# Set ownership
+# Configure database connection
+cat >> /opt/sonarqube/conf/sonar.properties <<EOF
+
+sonar.jdbc.username=sonar
+sonar.jdbc.password=SonarPassword123!
+sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube
+sonar.web.host=0.0.0.0
+sonar.web.port=9000
+EOF
+
+# Permissions
 chown -R sonar:sonar /opt/sonarqube
 
-# Create SonarQube systemd service
-cat <<EOF >/etc/systemd/system/sonarqube.service
+# Create systemd service
+cat > /etc/systemd/system/sonarqube.service <<EOF
 [Unit]
 Description=SonarQube Service
-After=network.target
+After=network.target postgresql.service
 
 [Service]
 Type=forking
@@ -42,8 +70,7 @@ LimitNPROC=8192
 WantedBy=multi-user.target
 EOF
 
-# Reload systemd and enable the service
-sudo systemctl daemon-reload
-sudo systemctl enable sonarqube
-sudo systemctl start sonarqube
-sudo systemctl status sonarqube
+# Start SonarQube
+systemctl daemon-reload
+systemctl enable sonarqube
+systemctl start sonarqube
