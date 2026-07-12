@@ -65,7 +65,7 @@ resource "aws_instance" "grafana" {
 ###### resource for CICD pipeline
 
 resource "aws_instance" "jenkin_server" {
-  count = 0
+  count = 1
   ami     = var.ami
   instance_type = var.instance_type
   subnet_id = var.public_subnet
